@@ -1,6 +1,6 @@
 // app/api/submit-lead/route.ts
 import { NextResponse } from 'next/server';
-import nodemailer, { TransportOptions, createTransport } from 'nodemailer';
+import { createTransport } from 'nodemailer';
 import { supabase } from '@/lib/supabase';
 
 interface LeadData {

@@ -1,4 +1,3 @@
-// components/Newsletter.tsx
 'use client';
 import React, { useState } from 'react';
 import { Mail } from 'lucide-react';
@@ -6,10 +5,12 @@ import { Mail } from 'lucide-react';
 const Newsletter = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
+    setErrorMessage('');
 
     try {
       const response = await fetch('/api/newsletter', {
@@ -23,10 +24,15 @@ const Newsletter = () => {
         setEmail('');
         setTimeout(() => setStatus('idle'), 3000);
       } else {
+        // Try to get error message from response
+        const errorData = await response.json().catch(() => ({}));
         setStatus('error');
+        setErrorMessage(errorData.message || 'Subscription failed. Please try again.');
       }
     } catch (error) {
       setStatus('error');
+      setErrorMessage('Network error. Please check your connection.');
+      console.error('Newsletter subscription error:', error);
     }
   };
 
@@ -59,12 +65,15 @@ const Newsletter = () => {
               {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
             </button>
           </form>
+          
           {status === 'success' && (
             <p className="mt-4 text-green-200">Thank you for subscribing!</p>
           )}
+          
           {status === 'error' && (
-            <p className="mt-4 text-red-200">An error occurred. Please try again.</p>
+            <p className="mt-4 text-red-200">{errorMessage}</p>
           )}
+          
           <p className="mt-6 text-sm text-blue-200">
             We respect your privacy. Unsubscribe at any time.
           </p>

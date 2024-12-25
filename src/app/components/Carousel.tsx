@@ -1,7 +1,7 @@
-// components/Carousel.tsx
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image'; // Import Image component from next/image
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -27,9 +27,9 @@ const Carousel = () => {
     }
   ];
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+  }, [slides.length]);
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
@@ -38,7 +38,7 @@ const Carousel = () => {
   useEffect(() => {
     const timer = setInterval(nextSlide, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [nextSlide]);
 
   return (
     <section className="relative bg-gray-900">
@@ -46,15 +46,16 @@ const Carousel = () => {
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentSlide ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
           >
             <div className="absolute inset-0 bg-black bg-opacity-50" />
-            <img
+            {/* Replaced <img> with <Image /> from next/image */}
+            <Image
               src={slide.image}
               alt={slide.title}
               className="w-full h-full object-cover"
+              layout="fill" // Ensures the image covers the container
+              objectFit="cover" // Ensures proper image fit
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-white text-center max-w-3xl px-4">
@@ -87,9 +88,7 @@ const Carousel = () => {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                index === currentSlide ? 'bg-white scale-110' : 'bg-white/50'
-              }`}
+              className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentSlide ? 'bg-white scale-110' : 'bg-white/50'}`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

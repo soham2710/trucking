@@ -1,4 +1,3 @@
-// app/admin/leads/page.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -189,6 +188,9 @@ export default function LeadsPage() {
                     >
                       Contact
                     </button>
+                    {notifiedLeads.includes(lead.id) && (
+                      <span className="text-green-500 text-sm ml-2">Notified</span>
+                    )}
                   </td>
                 </tr>
               ))}

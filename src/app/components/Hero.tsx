@@ -1,7 +1,7 @@
-// components/Hero.tsx
 'use client';
 import React, { useState } from 'react';
-import { Truck, Clock, Globe, ShieldCheck, DollarSign } from 'lucide-react';
+import { Clock, Globe, ShieldCheck, DollarSign } from 'lucide-react'; // Removed Truck import since it's unused
+import Image from 'next/image'; // Import Image from next/image
 
 const Hero = () => {
   const [formData, setFormData] = useState({
@@ -33,10 +33,13 @@ const Hero = () => {
   return (
     <section className="relative bg-gray-900 min-h-screen">
       <div className="absolute inset-0">
-        <img 
+        {/* Replaced <img> with <Image /> */}
+        <Image 
           src="/hero-bg.jpg" 
           alt="Professional trucking fleet" 
-          className="w-full h-full object-cover opacity-30"
+          layout="fill" // Ensures it fills the container
+          objectFit="cover" // Ensures the image is scaled to cover the area
+          className="opacity-30"
         />
       </div>
       <div className="relative container mx-auto px-4 py-16 md:py-24">
