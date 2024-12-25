@@ -33,12 +33,7 @@ export default function Home() {
           {/* Carousel/Gallery Section */}
           <section id="gallery">
             <Carousel />
-          </section>
-
-          {/* Newsletter Section */}
-          <section id="newsletter">
-            <Newsletter />
-          </section>          
+          </section>        
         </div>
 
         {/* Footer */}
