@@ -1,0 +1,25 @@
+trucking-website/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── globals.css
+│   ├── admin/
+│   │   └── leads/
+│   │       └── page.tsx
+│   └── api/
+│       └── submit-lead/
+│           └── route.ts
+├── components/
+│   ├── Hero.tsx
+│   ├── AboutUs.tsx
+│   ├── Services.tsx
+│   ├── Carousel.tsx
+│   ├── Newsletter.tsx
+│   ├── Contact.tsx
+│   └── Footer.tsx
+├── lib/
+│   └── supabase.ts
+├── types/
+│   └── index.ts
+└── public/
+    └── images/
