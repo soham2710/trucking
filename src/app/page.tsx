@@ -1,22 +1,37 @@
 // app/page.tsx
+'use client';
+import React from 'react';
 import Hero from './components/Hero';
 import AboutUs from './components/AboutUs';
 import Services from './components/Services';
 import Carousel from './components/Carousel';
-
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
+import FreightCalculator from './components/FreightCalculator';
 
 export default function Home() {
   return (
     <>
       <Navigation />
       <div className="min-h-screen flex flex-col">
-        {/* Main content */}
         <div className="flex-grow">
-          {/* Hero Section with Lead Form */}
-          <section id="home">
+          {/* Hero Section */}
+          <section id="home" className="relative">
             <Hero />
+          </section>
+
+          {/* Quote Calculator Section */}
+          <section id="quote" className="bg-gray-50 py-16">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Get Your Freight Quote</h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Get instant, competitive rates for your shipping needs. Whether you're shipping LTL or need a full truckload, 
+                  we've got you covered with reliable carriers nationwide.
+                </p>
+              </div>
+              <FreightCalculator />
+            </div>
           </section>
 
           {/* About Us Section */}
@@ -32,10 +47,9 @@ export default function Home() {
           {/* Carousel/Gallery Section */}
           <section id="gallery">
             <Carousel />
-          </section>        
+          </section>
         </div>
 
-        {/* Footer */}
         <Footer />
       </div>
     </>
