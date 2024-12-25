@@ -6,7 +6,6 @@ import { Button } from '@/app/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Toast, ToastTitle, ToastDescription, ToastProvider, ToastClose, ToastViewport } from '@/app/components/ui/toast';
-import { supabase } from '@/lib/supabase';
 
 const FreightForm = () => {
   const [showToast, setShowToast] = useState(false);
@@ -103,8 +102,6 @@ const FreightForm = () => {
         const errorText = await response.text();
         throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
-  
-      const result = await response.json();
   
       setShowToast(true);
   

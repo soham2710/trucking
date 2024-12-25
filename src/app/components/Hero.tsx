@@ -1,6 +1,6 @@
-// components/Hero.tsx
 'use client';
 import React from 'react';
+import Image from 'next/image'; // Import the Image component
 import { Clock, Globe, ShieldCheck, DollarSign } from 'lucide-react';
 
 const Hero = () => {
@@ -14,10 +14,14 @@ const Hero = () => {
   return (
     <section className="relative bg-gray-900 min-h-[80vh]">
       <div className="absolute inset-0">
-        <img
+        <Image
           src="/hero-bg.jpg"
           alt="Professional trucking fleet"
-          className="w-full h-full object-cover opacity-30"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          className="opacity-30"
+          priority // Ensures the image loads as soon as possible
         />
       </div>
       <div className="relative container mx-auto px-4 py-16 md:py-24">

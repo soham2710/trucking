@@ -1,4 +1,3 @@
-// app/page.tsx
 'use client';
 import React from 'react';
 import Hero from './components/Hero';
@@ -26,8 +25,8 @@ export default function Home() {
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Get Your Freight Quote</h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Get instant, competitive rates for your shipping needs. Whether you're shipping LTL or need a full truckload, 
-                  we've got you covered with reliable carriers nationwide.
+                  Get instant, competitive rates for your shipping needs. Whether you&#39;re shipping LTL or need a full truckload, 
+                  we&#39;ve got you covered with reliable carriers nationwide.
                 </p>
               </div>
               <FreightCalculator />

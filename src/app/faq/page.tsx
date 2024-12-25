@@ -1,4 +1,3 @@
-// app/faq/page.tsx
 'use client';
 import React from 'react';
 import Navigation from '@/app/components/Navigation';
@@ -9,7 +8,7 @@ const FaqPage = () => {
   const faqCategories = {
     business: [
       {
-        question: "I'm in business, and my needs are more specialized. Why should I use FreightCenter?",
+        question: "I&#39;m in business, and my needs are more specialized. Why should I use FreightCenter?",
         answer: `FreightCenter is a 3rd-Party Logistics provider that manages less-than-truckload (LTL) freight shipping, truckload (TL) freight shipping, international shipping, trade show shipments, and specialty shipping. We integrate our proprietary technology solutions with service delivered by your dedicated account managers to provide an unsurpassed level of service at the lowest available price.`
       }
     ],
@@ -26,7 +25,7 @@ const FaqPage = () => {
     costs: [
       {
         question: "How do I determine my shipping cost?",
-        answer: "The quote process is simple and fast at FreightCenter and is available 24/7. You only need the shipment's origin, destination, weight, dimensions, and contact information to determine your shipping cost."
+        answer: "The quote process is simple and fast at FreightCenter and is available 24/7. You only need the shipment&#39;s origin, destination, weight, dimensions, and contact information to determine your shipping cost."
       },
       {
         question: "What is a freight class, and how does it affect my shipping cost?",
@@ -52,7 +51,7 @@ const FaqPage = () => {
         <div className="container mx-auto px-4 py-12">
           <h1 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h1>
           
-          {Object.entries(faqCategories).map(([category, questions], index) => (
+          {Object.entries(faqCategories).map(([category, questions]) => (
             <div key={category} className="mb-8">
               <h2 className="text-2xl font-semibold mb-4 capitalize">{category} Questions</h2>
               <Accordion type="single" collapsible className="w-full">
@@ -72,7 +71,7 @@ const FaqPage = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              Have questions we haven't answered here? Call us at 800.716.7608
+              Have questions we haven&#39;t answered here? Call us at 800.716.7608
             </p>
           </div>
         </div>

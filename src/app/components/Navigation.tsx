@@ -47,14 +47,16 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {mainNavItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
-                onClick={handleClick}
+                onClick={(e) => {
+                  if (item.href.includes('#')) handleClick(e);
+                }}
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-300"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
             {resourceNavItems.map((item) => (
               <Link
@@ -65,13 +67,13 @@ const Navigation = () => {
                 {item.label}
               </Link>
             ))}
-            <a
+            <Link
               href="/#quote"
-              onClick={handleClick}
+              onClick={(e) => handleClick(e)}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300"
             >
               Get Quote
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -92,14 +94,17 @@ const Navigation = () => {
         {isOpen && (
           <div className="md:hidden pb-4">
             {mainNavItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
-                onClick={handleClick}
+                onClick={(e) => {
+                  if (item.href.includes('#')) handleClick(e);
+                  setIsOpen(false);
+                }}
                 className="block py-2 text-gray-700 hover:text-blue-600"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
             {resourceNavItems.map((item) => (
               <Link
@@ -111,13 +116,13 @@ const Navigation = () => {
                 {item.label}
               </Link>
             ))}
-            <a
+            <Link
               href="/#quote"
-              onClick={handleClick}
+              onClick={(e) => handleClick(e)}
               className="block mt-2 bg-blue-600 text-white px-4 py-2 rounded text-center"
             >
               Get Quote
-            </a>
+            </Link>
           </div>
         )}
       </div>

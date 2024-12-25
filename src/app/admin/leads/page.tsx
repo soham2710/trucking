@@ -46,28 +46,27 @@ export default function LeadsPage() {
  const [leads, setLeads] = useState<Lead[]>([]);
  const [selectedLead, setSelectedLead] = useState<(Lead & { items?: LeadItem[] }) | null>(null);
  const [loading, setLoading] = useState(true);
- const [notifiedLeads, setNotifiedLeads] = useState<number[]>([]);
+ 
 
  // Utility function to send email notification
  async function sendLeadNotification(lead: Lead) {
-   try {
-     const response = await fetch('/api/notify-lead', {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify(lead),
-     });
-
-     if (response.ok) {
-       setNotifiedLeads(prev => [...prev, lead.id]);
-     } else {
-       console.error('Failed to send lead notification');
-     }
-   } catch (error) {
-     console.error('Error sending lead notification:', error);
-   }
- }
+    try {
+      const response = await fetch('/api/notify-lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(lead),
+      });
+  
+      if (!response.ok) {
+        console.error('Failed to send lead notification');
+      }
+    } catch (error) {
+      console.error('Error sending lead notification:', error);
+    }
+  }
+  
 
  // Fetch lead items for LTL shipments
  const fetchLeadItems = async (leadId: number) => {
@@ -86,7 +85,7 @@ export default function LeadsPage() {
 
  // Open detailed view for a lead
  const openLeadDetails = async (lead: Lead) => {
-   let leadWithItems = { ...lead };
+   const leadWithItems = { ...lead };
    
    // Fetch items if it's an LTL shipment
    if (lead.shipping_type === 'ltl') {

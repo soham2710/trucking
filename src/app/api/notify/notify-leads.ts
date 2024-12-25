@@ -1,44 +1,97 @@
-// pages/api/notify-lead.ts
-import type { NextApiRequest, NextApiResponse } from 'next'
-import nodemailer from 'nodemailer'
+import type { NextApiRequest, NextApiResponse } from 'next';
+import nodemailer from 'nodemailer';
+
+interface ItemDetails {
+  quantity: number;
+  packagingType: string;
+  weight: number;
+  freightClass: string;
+}
+
+interface PickupLocation {
+  zipCode: string;
+  pickupDate?: string;
+  isResidential: boolean;
+  needsLiftgate: boolean;
+  limitedAccess: boolean;
+}
+
+interface DeliveryLocation {
+  zipCode: string;
+  isResidential: boolean;
+  needsLiftgate: boolean;
+  limitedAccess: boolean;
+}
+
+interface FTLDetails {
+  equipmentType?: string;
+  weight?: number;
+  declaredValue?: number;
+}
+
+interface LTLDetails {
+  items?: ItemDetails[];
+}
+
+interface LeadDetails {
+  pickupLocation: PickupLocation;
+  deliveryLocation: DeliveryLocation;
+  ftlDetails?: FTLDetails; // Using FTLDetails when 'ftl' type
+  ltlDetails?: LTLDetails; // Using LTLDetails when 'ltl' type
+}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' })
+    return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { 
-    first_name, 
-    last_name, 
-    email, 
-    phone, 
-    company_name, 
-    type, 
-    details, 
-    created_at 
-  } = req.body
+  const {
+    first_name,
+    last_name,
+    email,
+    phone,
+    company_name,
+    type,
+    details,
+    created_at,
+  }: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    company_name?: string;
+    type: 'ftl' | 'ltl';
+    details: LeadDetails;
+    created_at: string;
+  } = req.body;
 
   // Create a transporter using SMTP
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD
-    }
-  })
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
 
   try {
-    // Prepare detailed message content
-    const shippingDetails = type === 'ftl' 
-      ? `Equipment Type: ${details.equipmentType || 'N/A'}
-Weight: ${details.weight || 'N/A'} lbs
-Declared Value: $${details.declaredValue || 'N/A'}`
-      : `Items: ${details.items?.map((item: { quantity: any; packagingType: any; weight: any; freightClass: any }) => 
-          `${item.quantity} x ${item.packagingType} (${item.weight} lbs, Class ${item.freightClass})`
-        ).join(', ') || 'N/A'}`;
+    // Prepare detailed message content based on type (ftl or ltl)
+    const shippingDetails =
+      type === 'ftl'
+        ? `Equipment Type: ${details.ftlDetails?.equipmentType || 'N/A'}
+Weight: ${details.ftlDetails?.weight || 'N/A'} lbs
+Declared Value: $${details.ftlDetails?.declaredValue || 'N/A'}`
+        : `Items: ${
+            details.ltlDetails?.items
+              ?.map(
+                (item) =>
+                  `${item.quantity} x ${item.packagingType} (${item.weight} lbs, Class ${item.freightClass})`
+              )
+              .join(', ') || 'N/A'
+          }`;
 
     // Send mail with defined transport object
     await transporter.sendMail({
@@ -98,12 +151,12 @@ ${company_name ? `<p><strong>Company:</strong> ${company_name}</p>` : ''}
 
 <p><strong>Submitted at:</strong> ${new Date(created_at).toLocaleString()}</p>
 <p><a href="https://trucking-blond.vercel.app/admin/leads">View All Leads</a></p>
-      `
-    })
+      `,
+    });
 
-    res.status(200).json({ message: 'Notification sent successfully' })
+    res.status(200).json({ message: 'Notification sent successfully' });
   } catch (error) {
-    console.error('Error sending email:', error)
-    res.status(500).json({ message: 'Error sending notification' })
+    console.error('Error sending email:', error);
+    res.status(500).json({ message: 'Error sending notification' });
   }
 }
