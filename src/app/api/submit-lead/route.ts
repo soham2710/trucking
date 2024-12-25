@@ -56,7 +56,7 @@ export async function POST(request: Request) {
         <p><strong>Service:</strong> ${service}</p>
         <p><strong>Message:</strong> ${message}</p>
         <p><strong>Submitted at:</strong> ${new Date().toLocaleString()}</p>
-        <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/admin/leads">View All Leads</a></p>
+        <p><a href="https://trucking-blond.vercel.app/admin/leads">View All Leads</a></p>
       `
     };
 
