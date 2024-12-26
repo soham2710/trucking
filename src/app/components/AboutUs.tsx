@@ -11,8 +11,8 @@ const AboutUs = () => {
       icon: <Shield className="w-8 h-8 text-blue-600" />
     },
     {
-      number: "500+",
-      label: "Trucks in Fleet",
+      number: "97%",
+      label: "Accuracy for live market data",
       icon: <TrendingUp className="w-8 h-8 text-blue-600" />
     },
     {
@@ -98,8 +98,8 @@ const AboutUs = () => {
                 height={300} // Specify width and height
               />
               <div className="absolute bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg">
-                <p className="font-bold text-blue-600">Modern Fleet</p>
-                <p className="text-sm text-gray-600">500+ Vehicles</p>
+                <p className="font-bold text-blue-600">Freight Calculations</p>
+                <p className="text-sm text-gray-600">Given within 2 hours of your query</p>
               </div>
             </div>
 

@@ -2,7 +2,6 @@
 import React from 'react';
 import Hero from './components/Hero';
 import AboutUs from './components/AboutUs';
-import Services from './components/Services';
 import Carousel from './components/Carousel';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
@@ -38,10 +37,7 @@ export default function Home() {
             <AboutUs />
           </section>
 
-          {/* Services Section */}
-          <section id="services">
-            <Services />
-          </section>
+          
 
           {/* Carousel/Gallery Section */}
           <section id="gallery">
