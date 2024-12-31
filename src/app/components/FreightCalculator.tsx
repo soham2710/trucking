@@ -20,7 +20,7 @@ const FreightForm = () => {
     freightClass: '',
   }]);
 
-  const equipmentTypes = ['Drayage', 'Flatbed', 'Van', 'Reefer', 'Step Deck'];
+  const equipmentTypes = ['Drayage', 'Flatbed', 'Van', 'Reefer', 'Step Deck', 'Sprinter Van', 'Box Truck'];
   const packagingTypes = ['Pallet', 'Box', 'Crate', 'Drum', 'Bundle', 'Roll'];
 
   const [formData, setFormData] = useState({
@@ -312,7 +312,7 @@ const FreightForm = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Declared Value</Label>
+                  <Label>Declared Value (in $)</Label>
                   <Input 
                     type="number" 
                     placeholder="Enter declared value"
