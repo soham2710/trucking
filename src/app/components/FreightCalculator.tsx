@@ -372,7 +372,7 @@ const FreightForm = () => {
                           placeholder="Weight"
                           value={item.weight}
                           onChange={(e) => updateItem(index, 'weight', e.target.value)}
-                        />vercel
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label>Freight Class</Label>
