@@ -56,12 +56,6 @@ const Hero = () => {
             >
               Get Your Free Quote
             </button>
-            <a
-              href="#services"
-              className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-white/10 transition duration-300"
-            >
-              Our Services
-            </a>
           </div>
         </div>
       </div>

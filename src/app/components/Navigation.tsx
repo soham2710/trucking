@@ -11,7 +11,6 @@ const Navigation = () => {
     { label: 'Home', href: '/' },
     { label: 'About', href: '/#about' },
     { label: 'Gallery', href: '/#gallery' },
-    { label: 'Contact', href: '/#contact' }
   ];
 
   const resourceNavItems = [
@@ -40,7 +39,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Truck className="h-8 w-8 text-blue-600" />
-            <span className="ml-2 text-xl font-bold">TruckCo</span>
+            <span className="ml-2 text-xl font-bold">Instant Shipping Calculators</span>
           </Link>
 
           {/* Desktop Navigation */}
