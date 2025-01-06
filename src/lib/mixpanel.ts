@@ -66,6 +66,20 @@ class MixpanelTracker {
     }
   }
 
+  // Add to MixpanelTracker class
+  public trackButtonClick(buttonName: string, properties?: Record<string, any>) {
+    if (!this.initialized) return;
+    try {
+      mixpanel.track('Button Click', {
+        button_name: buttonName,
+        ...properties,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Failed to track button click:', error);
+    }
+  }
+
   public trackFormSubmission(properties: FormSubmissionProperties) {
     if (!this.initialized) {
       console.warn('Mixpanel not initialized');
