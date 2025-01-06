@@ -17,10 +17,8 @@ const Hero = () => {
         <Image
           src="/hero-bg.jpg"
           alt="Professional trucking fleet"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
-          className="opacity-30"
+          fill
+          className="object-cover object-center opacity-30"
           priority // Ensures the image loads as soon as possible
         />
       </div>

@@ -9,3 +9,9 @@ export interface Lead {
     status: string;
     created_at: string;
   }
+
+  declare global {
+    interface Window {
+        mixpanel: any;
+    }
+ }  

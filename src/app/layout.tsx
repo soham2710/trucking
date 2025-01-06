@@ -1,29 +1,36 @@
-// app/layout.tsx
-import type { Metadata } from 'next';
+'use client';
+import { useEffect } from 'react';
 import { Inter } from 'next/font/google';
+import { usePathname, useSearchParams } from 'next/navigation';
 import './globals.css';
-import mixpanel from 'mixpanel-browser'; // Import Mixpanel
+import { mixpanelTracker } from '@/lib/mixpanel';
 
 const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-  title: 'Professional Trucking & Logistics Services | Nationwide Coverage',
-  description: 'Reliable trucking and logistics solutions offering LTL, FTL, and specialized shipping services. Get instant quotes and real-time tracking.',
-  keywords: 'trucking services, logistics company, freight shipping, LTL shipping, FTL transport, nationwide logistics',
-};
-
-// Initialize Mixpanel
-mixpanel.init("aaa18717adfa752e6898ec2bf2fd06c5", {
-  debug: true,
-  track_pageview: true,
-  persistence: "localStorage",
-});
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    mixpanelTracker.init();
+    
+    const utmParams = {
+      utm_source: searchParams.get('utm_source') || undefined,
+      utm_medium: searchParams.get('utm_medium') || undefined,
+      utm_campaign: searchParams.get('utm_campaign') || undefined
+    };
+
+    mixpanelTracker.trackPageView({
+      path: pathname,
+      referrer: document.referrer,
+      ...utmParams
+    });
+  }, [pathname, searchParams]);
+
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
