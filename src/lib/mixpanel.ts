@@ -21,6 +21,22 @@ interface FormSubmissionProperties {
   form_completion_time?: number;
 }
 
+interface ButtonClickProperties {
+  button_name: string;
+  page_location?: string;
+  user_type?: string;
+  interaction_context?: string;
+  timestamp?: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
+// Define proper type for window.mixpanel
+declare global {
+  interface Window {
+    mixpanel: typeof mixpanel;
+  }
+}
+
 class MixpanelTracker {
   private static instance: MixpanelTracker;
   private initialized = false;
@@ -66,8 +82,7 @@ class MixpanelTracker {
     }
   }
 
-  // Add to MixpanelTracker class
-  public trackButtonClick(buttonName: string, properties?: Record<string, any>) {
+  public trackButtonClick(buttonName: string, properties?: Partial<ButtonClickProperties>) {
     if (!this.initialized) return;
     try {
       mixpanel.track('Button Click', {
