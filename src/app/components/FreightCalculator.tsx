@@ -72,8 +72,13 @@ const FreightForm = () => {
     setLoading(true);
   
     try {
+      // Format pickup date properly
+      const pickupDate = formData.pickupLocation.pickupDate 
+        ? new Date(formData.pickupLocation.pickupDate).toISOString().split('T')[0]
+        : null;
+  
       const leadData = {
-        // Include contact information
+        // Contact information
         first_name: formData.firstName,
         last_name: formData.lastName,
         email: formData.email,
@@ -82,13 +87,16 @@ const FreightForm = () => {
   
         type: formData.shippingType,
         details: {
-          ...formData,
-          // Ensure sensitive data is handled securely
           items: formData.shippingType === 'ltl' ? formData.items : undefined,
           equipmentType: formData.shippingType === 'ftl' ? formData.equipmentType : undefined,
-        },
-        status: 'new',
-        created_at: new Date().toISOString(),
+          weight: formData.weight || undefined,
+          declaredValue: formData.declaredValue || undefined,
+          pickupLocation: {
+            ...formData.pickupLocation,
+            pickupDate // Use formatted date
+          },
+          deliveryLocation: formData.deliveryLocation
+        }
       };
   
       const response = await fetch('/api/submit-lead', {
@@ -100,22 +108,19 @@ const FreightForm = () => {
       });
   
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+        const errorData = await response.json();
+        throw new Error(errorData.details || 'Failed to submit form');
       }
   
       setShowToast(true);
   
       // Reset form
       setFormData({
-        // Reset contact fields
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
         companyName: '',
-  
-        // Reset existing fields
         shippingType: 'ltl',
         items: [{
           quantity: 1,
@@ -153,14 +158,12 @@ const FreightForm = () => {
         freightClass: '',
       }]);
   
-    } catch (error: unknown) {
-      // Type guard to check if error is an Error object
+    } catch (error) {
       if (error instanceof Error) {
         console.error('Error submitting form:', error.message);
-        alert(`Error submitting form: ${error.message}`);
+        alert(error.message);
       } else {
-        // Fallback for unknown error types
-        console.error('Unknown error submitting form:', error);
+        console.error('Unknown error:', error);
         alert('An unexpected error occurred');
       }
     } finally {
@@ -431,9 +434,11 @@ const FreightForm = () => {
                       type="date"
                       min={new Date().toISOString().split('T')[0]}
                       value={formData.pickupLocation.pickupDate}
-                      onChange={(e) => updatePickupLocation('pickupDate', e.target.value)}
-                      pattern="\d{2}-\d{2}-\d{4}"
-                      placeholder="MM-DD-YYYY"
+                      onChange={(e) => {
+                        const date = e.target.value ? new Date(e.target.value) : null;
+                        updatePickupLocation('pickupDate', date ? date.toISOString().split('T')[0] : '');
+                      }}
+                      className="w-full"
                     />
                   </div>
                   <div className="space-y-2">
