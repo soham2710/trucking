@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Label } from '@/app/components/ui/label';
 import { Input } from '@/app/components/ui/input';
@@ -6,10 +6,8 @@ import { Button } from '@/app/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Toast, ToastTitle, ToastDescription, ToastProvider, ToastClose, ToastViewport } from '@/app/components/ui/toast';
-import { mixpanelTracker, ShippingType, useFormStartTime } from '@/lib/mixpanel';
 
 const FreightForm = () => {
-  const formStartTime = useFormStartTime();
   const [showToast, setShowToast] = useState(false);
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([{
@@ -34,7 +32,7 @@ const FreightForm = () => {
     companyName: '',
 
     // Existing Fields
-    shippingType: 'ltl' as ShippingType,
+    shippingType: 'ltl' as 'ltl' | 'ftl',
     items: items,
     equipmentType: '',
     weight: '',
@@ -73,13 +71,6 @@ const FreightForm = () => {
     setLoading(true);
   
     try {
-      mixpanelTracker.trackFormSubmission({
-        shipping_type: formData.shippingType,
-        pickup_zip: formData.pickupLocation.zipCode,
-        delivery_zip: formData.deliveryLocation.zipCode,
-        form_completion_time: Date.now() - formStartTime
-      });
-
       const leadData = {
         // Include contact information
         first_name: formData.firstName,
@@ -176,14 +167,9 @@ const FreightForm = () => {
     }
   };
 
-  useEffect(() => {
-    // Initialize mixpanel when component mounts
-    mixpanelTracker.init();
-  }, [])
-
   function updateFormData(key: string, value: string) {
-        setFormData(prev => ({ ...prev, [key]: value }));
-    }
+    setFormData(prev => ({ ...prev, [key]: value }));
+  }
 
   const updateItem = (index: number, field: string, value: string) => {
     const newItems = [...items];

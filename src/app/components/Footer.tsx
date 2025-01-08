@@ -1,8 +1,6 @@
-// components/Footer.tsx
 'use client';
 import React from 'react';
 import { Truck, Mail } from 'lucide-react';
-import { mixpanelTracker } from '@/lib/mixpanel';
 import Link from 'next/link';
 
 const Footer: React.FC = () => {
@@ -16,17 +14,13 @@ const Footer: React.FC = () => {
     { title: "Glossary", href: "/glossary" }
   ];
 
-  const handleClick = (title: string) => {
-    mixpanelTracker.trackButtonClick(`footer_${title.toLowerCase()}`);
-  };
-
   return (
     <footer className="bg-gray-900 text-white py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center md:flex-row md:justify-between">
           <div className="flex items-center mb-4 md:mb-0">
             <Truck className="w-8 h-8 mr-2" />
-            <span className="text-2xl font-bold">Instant Shipping Calulators</span>
+            <span className="text-2xl font-bold">Instant Shipping Calculators</span>
           </div>
 
           <nav className="flex flex-wrap justify-center gap-6">
@@ -35,7 +29,6 @@ const Footer: React.FC = () => {
                 key={index}
                 href={link.href}
                 className="text-gray-400 hover:text-white transition duration-300"
-                onClick={() => handleClick(link.title)}
               >
                 {link.title}
               </Link>
@@ -47,7 +40,6 @@ const Footer: React.FC = () => {
             <a 
               href="mailto:info@instantshippingcalculator.com" 
               className="text-gray-400 hover:text-white"
-              onClick={() => handleClick('email')}
             >
               info@instantshippingcalculator.com
             </a>

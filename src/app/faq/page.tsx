@@ -30,7 +30,7 @@ const faqCategories = {
   costs: [
     {
       question: "How do I determine my shipping cost?",
-      answer: "You need the origin, destination, weight, dimensions, and contact information. FreightCenter’s quote tool makes this process simple and fast, available 24/7.",
+      answer: "You need the origin, destination, weight, dimensions, and contact information. FreightCenter's quote tool makes this process simple and fast, available 24/7.",
     },
     {
       question: "What is a freight class, and how does it affect my cost?",
@@ -63,7 +63,7 @@ const FaqPage = () => {
               <h2 className="text-2xl font-semibold mb-4 capitalize">
                 {category} Questions
               </h2>
-              <Accordion type="single" collapsible>
+              <Accordion type="single" collapsible className="w-full">
                 {questions.map((faq, i) => (
                   <AccordionItem key={`${category}-${i}`} value={`${category}-${i}`}>
                     <AccordionTrigger>{faq.question}</AccordionTrigger>
@@ -73,7 +73,6 @@ const FaqPage = () => {
               </Accordion>
             </div>
           ))}
-          
         </div>
       </main>
       <Footer />
