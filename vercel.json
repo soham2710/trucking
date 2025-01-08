@@ -8,7 +8,10 @@
     "NOTIFICATION_EMAIL": "botmartz@gmail.com",
     "NEXT_PUBLIC_APP_URL": "https://www.instantshippingcalculator.com"
   },
-  "routes": [
-    { "src": "/(.*)", "dest": "/" }
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
