@@ -1,22 +1,14 @@
 {
-    "build": {
-      "env": {
-        "NEXT_PUBLIC_SUPABASE_URL": "https://xtblsjwzuunmsgqmgreq.supabase.co",
-        "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Ymxzand6dXVubXNncW1ncmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwODQyNTMsImV4cCI6MjA1MDY2MDI1M30.HjzJUh6FScmp2TjcQMzSpDF4hnu9dOcj1s8fXCuhs00",
-        "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Ymxzand6dXVubXNncW1ncmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwODQyNTMsImV4cCI6MjA1MDY2MDI1M30.HjzJUh6FScmp2TjcQMzSpDF4hnu9dOcj1s8fXCuhs00",
-        "EMAIL_USER": "botmartz@gmail.com",
-        "EMAIL_PASSWORD": "cidv uboc nfli dgja",
-        "NOTIFICATION_EMAIL": "botmartz@gmail.com",
-        "NEXT_PUBLIC_APP_URL": "http://localhost:3000"
-      }
-    },
-    "env": {
-      "NEXT_PUBLIC_SUPABASE_URL": "https://xtblsjwzuunmsgqmgreq.supabase.co",
-      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Ymxzand6dXVubXNncW1ncmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwODQyNTMsImV4cCI6MjA1MDY2MDI1M30.HjzJUh6FScmp2TjcQMzSpDF4hnu9dOcj1s8fXCuhs00",
-      "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Ymxzand6dXVubXNncW1ncmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwODQyNTMsImV4cCI6MjA1MDY2MDI1M30.HjzJUh6FScmp2TjcQMzSpDF4hnu9dOcj1s8fXCuhs00",
-      "EMAIL_USER": "botmartz@gmail.com",
-      "EMAIL_PASSWORD": "cidv uboc nfli dgja",
-      "NOTIFICATION_EMAIL": "botmartz@gmail.com",
-      "NEXT_PUBLIC_APP_URL": "http://localhost:3000"
-    }
-  }
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://xtblsjwzuunmsgqmgreq.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Ymxzand6dXVubXNncW1ncmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwODQyNTMsImV4cCI6MjA1MDY2MDI1M30.HjzJUh6FScmp2TjcQMzSpDF4hnu9dOcj1s8fXCuhs00",
+    "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Ymxzand6dXVubXNncW1ncmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwODQyNTMsImV4cCI6MjA1MDY2MDI1M30.HjzJUh2FScmp2TjcQMzSpDF4hnu9dOcj1s8fXCuhs00",
+    "EMAIL_USER": "botmartz@gmail.com",
+    "EMAIL_PASSWORD": "cidv uboc nfli dgja",
+    "NOTIFICATION_EMAIL": "botmartz@gmail.com",
+    "NEXT_PUBLIC_APP_URL": "https://www.instantshippingcalculator.com"
+  },
+  "routes": [
+    { "src": "/(.*)", "dest": "/" }
+  ]
+}

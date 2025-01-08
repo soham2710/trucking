@@ -1,36 +1,16 @@
 'use client';
-
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Truck, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 
-const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Navigation() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const mainNavItems = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/#about' },
-    { label: 'Gallery', href: '/#gallery' },
+  const navItems = [
+    { label: 'About', href: '#about' },
+    { label: 'Quote', href: '#quote' },
+    { label: 'Gallery', href: '#gallery' },
   ];
-
-  const resourceNavItems = [
-    { label: 'FAQ', href: '/faq' },
-    { label: 'Glossary', href: '/glossary' }
-  ];
-
-  // Function to handle smooth scroll for hash links
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const href = e.currentTarget.href;
-    if (href.includes('#')) {
-      e.preventDefault();
-      const id = href.split('#')[1];
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-      }
-    }
-  };
 
   return (
     <nav className="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-lg">
@@ -39,48 +19,35 @@ const Navigation = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Truck className="h-8 w-8 text-blue-600" />
-            <span className="ml-2 text-xl font-bold">Instant Shipping Calculators</span>
+            <span className="ml-2 text-xl font-bold">Instant Shipping Calculator</span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            {mainNavItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  if (item.href.includes('#')) handleClick(e);
-                }}
-                className="text-gray-700 hover:text-blue-600 transition-colors duration-300"
-              >
-                {item.label}
-              </Link>
-            ))}
-            {resourceNavItems.map((item) => (
-              <Link
+            {navItems.map((item) => (
+              <a
                 key={item.label}
                 href={item.href}
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-300"
               >
                 {item.label}
-              </Link>
+              </a>
             ))}
-            <Link
-              href="/#quote"
-              onClick={(e) => handleClick(e)}
+            <a
+              href="#quote"
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300"
             >
               Get Quote
-            </Link>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? (
+            {isMenuOpen ? (
               <X className="h-6 w-6 text-gray-700" />
             ) : (
               <Menu className="h-6 w-6 text-gray-700" />
@@ -88,44 +55,29 @@ const Navigation = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden pb-4">
-            {mainNavItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  if (item.href.includes('#')) handleClick(e);
-                  setIsOpen(false);
-                }}
-                className="block py-2 text-gray-700 hover:text-blue-600"
-              >
-                {item.label}
-              </Link>
-            ))}
-            {resourceNavItems.map((item) => (
-              <Link
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden pb-4 pt-2">
+            {navItems.map((item) => (
+              <a
                 key={item.label}
                 href={item.href}
                 className="block py-2 text-gray-700 hover:text-blue-600"
-                onClick={() => setIsOpen(false)}
+                onClick={() => setIsMenuOpen(false)}
               >
                 {item.label}
-              </Link>
+              </a>
             ))}
-            <Link
-              href="/#quote"
-              onClick={(e) => handleClick(e)}
+            <a
+              href="#quote"
               className="block mt-2 bg-blue-600 text-white px-4 py-2 rounded text-center"
+              onClick={() => setIsMenuOpen(false)}
             >
               Get Quote
-            </Link>
+            </a>
           </div>
         )}
       </div>
     </nav>
   );
-};
-
-export default Navigation;
+}

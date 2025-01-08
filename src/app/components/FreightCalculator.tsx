@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Label } from '@/app/components/ui/label';
@@ -428,8 +429,11 @@ const FreightForm = () => {
                     <Label>Pickup Date</Label>
                     <Input 
                       type="date"
+                      min={new Date().toISOString().split('T')[0]}
                       value={formData.pickupLocation.pickupDate}
                       onChange={(e) => updatePickupLocation('pickupDate', e.target.value)}
+                      pattern="\d{2}-\d{2}-\d{4}"
+                      placeholder="MM-DD-YYYY"
                     />
                   </div>
                   <div className="space-y-2">
