@@ -67,7 +67,7 @@ const FreightForm = () => {
     setFormData({...formData, items: newItems});
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
   
@@ -115,11 +115,15 @@ const FreightForm = () => {
       setShowToast(true);
   
       // Trigger Google Ads Conversion
-      if (typeof window !== 'undefined' && window.gtag) {
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
         window.gtag('event', 'conversion', {
           'send_to': 'AW-16818747005/mqKZCNyxiIEaEP3s5tM-',
           'value': 1.0,
           'currency': 'USD', // Changed to USD for USA-based site
+          //Uncomment the following lines if you want to handle redirection after conversion
+          'event_callback': () => {
+             window.location.href = 'https://www.instantshippingcalculator.com/';
+          }
         });
       }
   
@@ -216,8 +220,9 @@ const FreightForm = () => {
             {/* New Contact Information Section */}
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-2">
-                <Label>First Name *</Label>
+                <Label htmlFor="firstName">First Name *</Label>
                 <Input 
+                  id="firstName"
                   type="text" 
                   placeholder="Enter first name"
                   value={formData.firstName}
@@ -226,8 +231,9 @@ const FreightForm = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Last Name *</Label>
+                <Label htmlFor="lastName">Last Name *</Label>
                 <Input 
+                  id="lastName"
                   type="text" 
                   placeholder="Enter last name"
                   value={formData.lastName}
@@ -236,8 +242,9 @@ const FreightForm = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Email *</Label>
+                <Label htmlFor="email">Email *</Label>
                 <Input 
+                  id="email"
                   type="email" 
                   placeholder="Enter email address"
                   value={formData.email}
@@ -246,8 +253,9 @@ const FreightForm = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Phone Number *</Label>
+                <Label htmlFor="phone">Phone Number *</Label>
                 <Input 
+                  id="phone"
                   type="tel" 
                   placeholder="Enter phone number"
                   value={formData.phone}
@@ -256,8 +264,9 @@ const FreightForm = () => {
                 />
               </div>
               <div className="space-y-2 md:col-span-2">
-                <Label>Company Name (Optional)</Label>
+                <Label htmlFor="companyName">Company Name (Optional)</Label>
                 <Input 
+                  id="companyName"
                   type="text" 
                   placeholder="Enter company name"
                   value={formData.companyName}
@@ -303,7 +312,11 @@ const FreightForm = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Equipment Type</Label>
-                    <Select onValueChange={(value) => updateFormData('equipmentType', value)}>
+                    <Select 
+                      onValueChange={(value) => updateFormData('equipmentType', value)}
+                      value={formData.equipmentType}
+                      required
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Select equipment" />
                       </SelectTrigger>
@@ -321,6 +334,7 @@ const FreightForm = () => {
                       placeholder="Enter weight"
                       value={formData.weight}
                       onChange={(e) => updateFormData('weight', e.target.value)}
+                      required
                     />
                   </div>
                 </div>
@@ -349,11 +363,16 @@ const FreightForm = () => {
                           min={1} 
                           value={item.quantity}
                           onChange={(e) => updateItem(index, 'quantity', e.target.value)}
+                          required
                         />
                       </div>
                       <div className="space-y-2">
                         <Label>Package Type</Label>
-                        <Select onValueChange={(value) => updateItem(index, 'packagingType', value)}>
+                        <Select 
+                          onValueChange={(value) => updateItem(index, 'packagingType', value)}
+                          value={item.packagingType}
+                          required
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select type" />
                           </SelectTrigger>
@@ -371,11 +390,16 @@ const FreightForm = () => {
                           placeholder="Weight"
                           value={item.weight}
                           onChange={(e) => updateItem(index, 'weight', e.target.value)}
+                          required
                         />
                       </div>
                       <div className="space-y-2">
                         <Label>Freight Class</Label>
-                        <Select onValueChange={(value) => updateItem(index, 'freightClass', value)}>
+                        <Select 
+                          onValueChange={(value) => updateItem(index, 'freightClass', value)}
+                          value={item.freightClass}
+                          required
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select class" />
                           </SelectTrigger>
@@ -395,6 +419,7 @@ const FreightForm = () => {
                           placeholder="Length"
                           value={item.length}
                           onChange={(e) => updateItem(index, 'length', e.target.value)}
+                          required
                         />
                       </div>
                       <div className="space-y-2">
@@ -404,6 +429,7 @@ const FreightForm = () => {
                           placeholder="Width"
                           value={item.width}
                           onChange={(e) => updateItem(index, 'width', e.target.value)}
+                          required
                         />
                       </div>
                       <div className="space-y-2">
@@ -413,12 +439,17 @@ const FreightForm = () => {
                           placeholder="Height"
                           value={item.height}
                           onChange={(e) => updateItem(index, 'height', e.target.value)}
+                          required
                         />
                       </div>
                     </div>
                   </div>
                 ))}
-                <Button type="button" onClick={addItem} className="mt-4 bg-secondary hover:bg-secondary/80">
+                <Button 
+                  type="button" 
+                  onClick={addItem} 
+                  className="mt-4 bg-secondary hover:bg-secondary/80"
+                >
                   + Add Another Item
                 </Button>
               </div>
@@ -429,17 +460,20 @@ const FreightForm = () => {
               <div className="space-y-4">
                 <h3 className="font-semibold">Pickup Location</h3>
                 <div className="space-y-2">
-                  <Label>ZIP Code</Label>
+                  <Label htmlFor="pickupZipCode">ZIP Code</Label>
                   <Input 
+                    id="pickupZipCode"
                     type="text" 
                     placeholder="Enter ZIP code"
                     value={formData.pickupLocation.zipCode}
                     onChange={(e) => updatePickupLocation('zipCode', e.target.value)}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Pickup Date</Label>
+                  <Label htmlFor="pickupDate">Pickup Date</Label>
                   <Input 
+                    id="pickupDate"
                     type="date"
                     min={new Date().toISOString().split('T')[0]}
                     value={formData.pickupLocation.pickupDate}
@@ -448,6 +482,7 @@ const FreightForm = () => {
                       updatePickupLocation('pickupDate', date ? date.toISOString().split('T')[0] : '');
                     }}
                     className="w-full"
+                    required
                   />
                 </div>
                 <div className="space-y-2">
@@ -484,12 +519,14 @@ const FreightForm = () => {
               <div className="space-y-4">
                 <h3 className="font-semibold">Delivery Location</h3>
                 <div className="space-y-2">
-                  <Label>ZIP Code</Label>
+                  <Label htmlFor="deliveryZipCode">ZIP Code</Label>
                   <Input 
+                    id="deliveryZipCode"
                     type="text" 
                     placeholder="Enter ZIP code"
                     value={formData.deliveryLocation.zipCode}
                     onChange={(e) => updateDeliveryLocation('zipCode', e.target.value)}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
