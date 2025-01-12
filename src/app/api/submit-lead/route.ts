@@ -94,7 +94,7 @@ export async function POST(request: Request) {
 
       // Pickup Location
       pickup_zip_code: leadData.details.pickupLocation.zipCode,
-      pickup_date: leadData.details.pickupLocation.pickupDate,
+      pickup_date: leadData.details.pickupLocation.pickupDate || null,
       pickup_is_residential: leadData.details.pickupLocation.isResidential,
       pickup_needs_liftgate: leadData.details.pickupLocation.needsLiftgate,
       pickup_limited_access: leadData.details.pickupLocation.limitedAccess,
