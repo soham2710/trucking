@@ -114,6 +114,15 @@ const FreightForm = () => {
   
       setShowToast(true);
   
+      // Trigger Google Ads Conversion
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-16818747005/mqKZCNyxiIEaEP3s5tM-',
+          'value': 1.0,
+          'currency': 'USD', // Changed to USD for USA-based site
+        });
+      }
+  
       // Reset form
       setFormData({
         firstName: '',
@@ -426,122 +435,122 @@ const FreightForm = () => {
                     placeholder="Enter ZIP code"
                     value={formData.pickupLocation.zipCode}
                     onChange={(e) => updatePickupLocation('zipCode', e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Pickup Date</Label>
-                    <Input 
-                      type="date"
-                      min={new Date().toISOString().split('T')[0]}
-                      value={formData.pickupLocation.pickupDate}
-                      onChange={(e) => {
-                        const date = e.target.value ? new Date(e.target.value) : null;
-                        updatePickupLocation('pickupDate', date ? date.toISOString().split('T')[0] : '');
-                      }}
-                      className="w-full"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-medium">Additional Services</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="residential-pickup"
-                          checked={formData.pickupLocation.isResidential}
-                          onCheckedChange={(checked) => updatePickupLocation('isResidential', checked)}
-                        />
-                        <label htmlFor="residential-pickup">Residential Area</label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="liftgate-pickup"
-                          checked={formData.pickupLocation.needsLiftgate}
-                          onCheckedChange={(checked) => updatePickupLocation('needsLiftgate', checked)}
-                        />
-                        <label htmlFor="liftgate-pickup">Lift Gate Required</label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="limited-pickup"
-                          checked={formData.pickupLocation.limitedAccess}
-                          onCheckedChange={(checked) => updatePickupLocation('limitedAccess', checked)}
-                        />
-                        <label htmlFor="limited-pickup">Limited Access Area</label>
-                      </div>
-                    </div>
-                  </div>
+                  />
                 </div>
-  
-                <div className="space-y-4">
-                  <h3 className="font-semibold">Delivery Location</h3>
+                <div className="space-y-2">
+                  <Label>Pickup Date</Label>
+                  <Input 
+                    type="date"
+                    min={new Date().toISOString().split('T')[0]}
+                    value={formData.pickupLocation.pickupDate}
+                    onChange={(e) => {
+                      const date = e.target.value ? new Date(e.target.value) : null;
+                      updatePickupLocation('pickupDate', date ? date.toISOString().split('T')[0] : '');
+                    }}
+                    className="w-full"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium">Additional Services</h4>
                   <div className="space-y-2">
-                    <Label>ZIP Code</Label>
-                    <Input 
-                      type="text" 
-                      placeholder="Enter ZIP code"
-                      value={formData.deliveryLocation.zipCode}
-                      onChange={(e) => updateDeliveryLocation('zipCode', e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-medium">Additional Services</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="residential-delivery"
-                          checked={formData.deliveryLocation.isResidential}
-                          onCheckedChange={(checked) => updateDeliveryLocation('isResidential', checked)}
-                        />
-                        <label htmlFor="residential-delivery">Residential Area</label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="liftgate-delivery"
-                          checked={formData.deliveryLocation.needsLiftgate}
-                          onCheckedChange={(checked) => updateDeliveryLocation('needsLiftgate', checked)}
-                        />
-                        <label htmlFor="liftgate-delivery">Lift Gate Required</label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id="limited-delivery"
-                          checked={formData.deliveryLocation.limitedAccess}
-                          onCheckedChange={(checked) => updateDeliveryLocation('limitedAccess', checked)}
-                        />
-                        <label htmlFor="limited-delivery">Limited Access Area</label>
-                      </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="residential-pickup"
+                        checked={formData.pickupLocation.isResidential}
+                        onCheckedChange={(checked) => updatePickupLocation('isResidential', checked)}
+                      />
+                      <label htmlFor="residential-pickup">Residential Area</label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="liftgate-pickup"
+                        checked={formData.pickupLocation.needsLiftgate}
+                        onCheckedChange={(checked) => updatePickupLocation('needsLiftgate', checked)}
+                      />
+                      <label htmlFor="liftgate-pickup">Lift Gate Required</label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="limited-pickup"
+                        checked={formData.pickupLocation.limitedAccess}
+                        onCheckedChange={(checked) => updatePickupLocation('limitedAccess', checked)}
+                      />
+                      <label htmlFor="limited-pickup">Limited Access Area</label>
                     </div>
                   </div>
                 </div>
               </div>
-  
-              <div className="flex justify-center">
-                <Button 
-                  type="submit" 
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8"
-                  disabled={loading}
-                >
-                  {loading ? 'Getting Quote...' : 'Get Quote'}
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-  
-        {showToast && (
-          <Toast>
-            <div className="grid gap-1">
-              <ToastTitle>Success!</ToastTitle>
-              <ToastDescription>
-                Thank you for your quote request. Our team will contact you shortly.
-              </ToastDescription>
-            </div>
-            <ToastClose onClick={() => setShowToast(false)} />
-          </Toast>
-        )}
-        <ToastViewport />
-      </ToastProvider>
-    );
-  };
 
-  export default FreightForm;  
+              <div className="space-y-4">
+                <h3 className="font-semibold">Delivery Location</h3>
+                <div className="space-y-2">
+                  <Label>ZIP Code</Label>
+                  <Input 
+                    type="text" 
+                    placeholder="Enter ZIP code"
+                    value={formData.deliveryLocation.zipCode}
+                    onChange={(e) => updateDeliveryLocation('zipCode', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium">Additional Services</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="residential-delivery"
+                        checked={formData.deliveryLocation.isResidential}
+                        onCheckedChange={(checked) => updateDeliveryLocation('isResidential', checked)}
+                      />
+                      <label htmlFor="residential-delivery">Residential Area</label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="liftgate-delivery"
+                        checked={formData.deliveryLocation.needsLiftgate}
+                        onCheckedChange={(checked) => updateDeliveryLocation('needsLiftgate', checked)}
+                      />
+                      <label htmlFor="liftgate-delivery">Lift Gate Required</label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="limited-delivery"
+                        checked={formData.deliveryLocation.limitedAccess}
+                        onCheckedChange={(checked) => updateDeliveryLocation('limitedAccess', checked)}
+                      />
+                      <label htmlFor="limited-delivery">Limited Access Area</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <Button 
+                type="submit" 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8"
+                disabled={loading}
+              >
+                {loading ? 'Getting Quote...' : 'Get Quote'}
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      {showToast && (
+        <Toast>
+          <div className="grid gap-1">
+            <ToastTitle>Success!</ToastTitle>
+            <ToastDescription>
+              Thank you for your quote request. Our team will contact you shortly.
+            </ToastDescription>
+          </div>
+          <ToastClose onClick={() => setShowToast(false)} />
+        </Toast>
+      )}
+      <ToastViewport />
+    </ToastProvider>
+  );
+};
+
+export default FreightForm;
