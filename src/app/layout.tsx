@@ -5,6 +5,8 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
+// Replace with your own environment variables if needed
+const GTM_ID = 'GTM-56R5VF28'; // Or process.env.NEXT_PUBLIC_GTM_ID
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 
@@ -16,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Google Tag Manager */}
+        {/* Google Tag Manager (GTM) */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -28,7 +30,7 @@ export default function RootLayout({
                 j.async=true;
                 j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
                 f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-56R5VF28');
+              })(window,document,'script','dataLayer','${GTM_ID}');
             `,
           }}
         />
@@ -96,11 +98,13 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        {/* Main content */}
         <main>{children}</main>
 
+        {/* NoScript fallback for GTM */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-56R5VF28"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
