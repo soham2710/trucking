@@ -1,4 +1,3 @@
-// layout.tsx
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
@@ -81,8 +80,7 @@ export default function RootLayout({
           </>
         )}
 
-        {/* Removed Additional Google Ads Conversion Tracking */}
-        {/* 
+        {/* Google Ads Conversion Tracking */}
         <Script
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=AW-16818747005"
@@ -99,7 +97,6 @@ export default function RootLayout({
             `,
           }}
         />
-        */}
       </head>
       <body className={inter.className}>
         {/* Main content */}
@@ -116,8 +113,7 @@ export default function RootLayout({
           />
         </noscript>
 
-        {/* Removed Conversion Tracking Script */}
-        {/* 
+        {/* Conversion Tracking Script */}
         <Script
           id="conversion-tracking"
           strategy="afterInteractive"
@@ -144,7 +140,6 @@ export default function RootLayout({
             `,
           }}
         />
-        */}
       </body>
     </html>
   );
