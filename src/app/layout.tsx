@@ -19,7 +19,9 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         {/* Google Tag Manager (GTM) */}
-        <script
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){
@@ -79,7 +81,8 @@ export default function RootLayout({
           </>
         )}
 
-        {/* Additional Google Ads Conversion Tracking */}
+        {/* Removed Additional Google Ads Conversion Tracking */}
+        {/* 
         <Script
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=AW-16818747005"
@@ -96,6 +99,7 @@ export default function RootLayout({
             `,
           }}
         />
+        */}
       </head>
       <body className={inter.className}>
         {/* Main content */}
@@ -108,10 +112,12 @@ export default function RootLayout({
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
+            title="Google Tag Manager"
           />
         </noscript>
 
-        {/* Conversion Tracking Script */}
+        {/* Removed Conversion Tracking Script */}
+        {/* 
         <Script
           id="conversion-tracking"
           strategy="afterInteractive"
@@ -138,6 +144,7 @@ export default function RootLayout({
             `,
           }}
         />
+        */}
       </body>
     </html>
   );
