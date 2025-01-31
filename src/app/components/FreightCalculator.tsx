@@ -1,15 +1,23 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Label } from '@/app/components/ui/label';
 import { Input } from '@/app/components/ui/input';
 import { Button } from '@/app/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import { Checkbox } from '@/app/components/ui/checkbox';
-import { Toast, ToastTitle, ToastDescription, ToastProvider, ToastClose, ToastViewport } from '@/app/components/ui/toast';
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose
+} from '@/app/components/ui/dialog';
 
 const FreightForm = () => {
-  const [showToast, setShowToast] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+  const [canCloseDialog, setCanCloseDialog] = useState(false); // Manage dialog closure
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([{
     quantity: 1,
@@ -25,7 +33,7 @@ const FreightForm = () => {
   const packagingTypes = ['Pallet', 'Box', 'Crate', 'Drum', 'Bundle', 'Roll'];
 
   const [formData, setFormData] = useState({
-    // Contact Information (New Fields)
+    // Contact Information
     firstName: '',
     lastName: '',
     email: '',
@@ -33,7 +41,7 @@ const FreightForm = () => {
     companyName: '',
 
     // Existing Fields
-    shippingType: 'ltl' as 'ltl' | 'ftl',
+    shippingType: 'ltl',
     items: items,
     equipmentType: '',
     weight: '',
@@ -67,16 +75,29 @@ const FreightForm = () => {
     setFormData({...formData, items: newItems});
   };
 
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    if (showDialog) {
+      setCanCloseDialog(false); // Disable close initially
+      timer = setTimeout(() => {
+        setCanCloseDialog(true); // Enable close after 10 minutes
+      }, 600000); // 10 minutes in milliseconds
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [showDialog]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-  
+
     try {
       // Format pickup date properly
       const pickupDate = formData.pickupLocation.pickupDate 
         ? new Date(formData.pickupLocation.pickupDate).toISOString().split('T')[0]
         : null;
-  
+
       const leadData = {
         // Contact information
         first_name: formData.firstName,
@@ -84,7 +105,7 @@ const FreightForm = () => {
         email: formData.email,
         phone: formData.phone,
         company_name: formData.companyName,
-  
+
         type: formData.shippingType,
         details: {
           items: formData.shippingType === 'ltl' ? formData.items : undefined,
@@ -98,7 +119,7 @@ const FreightForm = () => {
           deliveryLocation: formData.deliveryLocation
         }
       };
-  
+
       const response = await fetch('/api/submit-lead', {
         method: 'POST',
         headers: {
@@ -106,27 +127,25 @@ const FreightForm = () => {
         },
         body: JSON.stringify(leadData),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.details || 'Failed to submit form');
       }
-  
-      setShowToast(true);
-  
-      // Trigger Google Ads Conversion
+
+      setShowDialog(true);
+      setCanCloseDialog(false); // Ensure close is disabled when dialog opens
+
+      // Trigger Google Ads Conversion without redirect
       if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
         window.gtag('event', 'conversion', {
           'send_to': 'AW-16818747005/mqKZCNyxiIEaEP3s5tM-',
           'value': 1.0,
-          'currency': 'USD', // Changed to USD for USA-based site
-          //Uncomment the following lines if you want to handle redirection after conversion
-          'event_callback': () => {
-             window.location.href = 'https://www.instantshippingcalculator.com/';
-          }
+          'currency': 'USD',
+          // Removed 'event_callback' to prevent redirect
         });
       }
-  
+
       // Reset form
       setFormData({
         firstName: '',
@@ -170,7 +189,7 @@ const FreightForm = () => {
         weight: '',
         freightClass: '',
       }]);
-  
+
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error submitting form:', error.message);
@@ -210,14 +229,14 @@ const FreightForm = () => {
   };
 
   return (
-    <ToastProvider>
+    <>
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle>Freight Quote Calculator</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* New Contact Information Section */}
+            {/* Contact Information Section */}
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name *</Label>
@@ -574,19 +593,46 @@ const FreightForm = () => {
         </CardContent>
       </Card>
 
-      {showToast && (
-        <Toast>
-          <div className="grid gap-1">
-            <ToastTitle>Success!</ToastTitle>
-            <ToastDescription>
-              Thank you for your quote request. Our team will contact you shortly.
-            </ToastDescription>
+      {/* Thank You Dialog */}
+      <Dialog 
+        open={showDialog} 
+        onOpenChange={(open) => {
+          if (!open) return; // Prevent closing by clicking outside or pressing Esc
+          if (canCloseDialog) {
+            setShowDialog(false);
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-center">Thank You!</DialogTitle>
+            <DialogDescription className="text-center pt-4 text-lg">
+              We've received your quote request and our team will contact you shortly with competitive rates tailored to your shipping needs.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center mt-6">
+            <DialogClose asChild>
+              <Button 
+                className={`bg-blue-600 hover:bg-blue-700 text-white px-8 ${!canCloseDialog ? 'opacity-50 cursor-not-allowed' : ''}`}
+                onClick={() => {
+                  if (canCloseDialog) {
+                    setShowDialog(false);
+                  }
+                }}
+                disabled={!canCloseDialog}
+              >
+                Close
+              </Button>
+            </DialogClose>
           </div>
-          <ToastClose onClick={() => setShowToast(false)} />
-        </Toast>
-      )}
-      <ToastViewport />
-    </ToastProvider>
+          {!canCloseDialog && (
+            <p className="text-center text-sm text-gray-500 mt-4">
+              You can close this dialog after 10 minutes.
+            </p>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
