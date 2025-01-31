@@ -606,7 +606,7 @@ const FreightForm = () => {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-center">Thank You!</DialogTitle>
-            <DialogDescription className="text-center pt-4 text-lg">
+            <DialogDescription className="text-center pt-4 text-lg thank-you-note">
               We&apos;ve received your quote request and our team will contact you shortly with competitive rates tailored to your shipping needs.
             </DialogDescription>
           </DialogHeader>
